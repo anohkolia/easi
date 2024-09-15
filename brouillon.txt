@@ -1,0 +1,4 @@
+$table->string('nom');
+            $table->float('prix_ht');
+            $table->text('description');
+            $table->string('photo');
