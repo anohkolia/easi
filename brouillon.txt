@@ -1,2 +1,91 @@
-./vendor/bin/sail up -d
+---lorsque je clone mon projet sur un nouvel appareil :
+
+--j'installe npm :
+    npm install
+
+--Installation des composant de composer :
+    herd composer install
+
+--j'installe sail à l'aide de herd:
+    herd php artisan sail:install
+
+--je génère e key egerate :
+    herd php artisan key:generate
+
+--Lancement de docker :
+    ./vendor/bin/sail up -d
+
+--Je lance la migration de ma base de données :
+    ./vendor/bin/sail artisan migrate
+
+
+
+-------------------------------------------------------------
+
+        $produit = new Produit();
+        $produit->nom = "Chemise Hawai";
+        $produit->prix_ht = 20;
+        $produit->description = "Bonjour je suis une belle Chemise Hawai de taille XL";
+        $produit->photo = "f1.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise Fleurie Vert";
+        $produit->prix_ht = 22;
+        $produit->description = "Bonjour je suis une belle Chemise Fleurie Vert de taille XL";
+        $produit->photo = "f2.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise Fleurie Rouge";
+        $produit->prix_ht = 24;
+        $produit->description = "Bonjour je suis une belle Chemise Fleurie Rouge de taille XL";
+        $produit->photo = "f3.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise Fleurie Blanc";
+        $produit->prix_ht = 19;
+        $produit->description = "Bonjour je suis une belle Chemise Fleurie Blanc de taille XL";
+        $produit->photo = "f4.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise Bleue Fleurie";
+        $produit->prix_ht = 25;
+        $produit->description = "Bonjour je suis une belle Chemise Bleue Fleurie de taille XL";
+        $produit->photo = "f5.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise Orange & bleue";
+        $produit->prix_ht = 18;
+        $produit->description = "Bonjour je suis une belle Chemise Orange & bleue de taille XL";
+        $produit->photo = "f6.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Pantalon Femme";
+        $produit->prix_ht = 30;
+        $produit->description = "Bonjour je suis un beau Pantalon Femme de taille XL";
+        $produit->photo = "f7.jpg";
+        $produit->save();
+
+        $produit = new \App\Models\Produit();
+        $produit->nom = "Chemise";
+        $produit->prix_ht = 21;
+        $produit->description = "Bonjour je suis unee belle Chemise Hawai de taille XL";
+        $produit->photo = "f8.jpg";
+        $produit->save();
+
+
+        return [
+                    'nom' => $this->faker->word(), // Génère un mot aléatoire
+                    'prix_ht' => $this->faker->randomFloat(2, 15, 60), // Génère un nombre entre 10 et 100
+                    'description' => $this->faker->text(), // Génère du text aléatoire
+                    'photo' => $this->faker->image('public/img/produits', 640, 480, null, false), // Génère une image aléatoire
+                ];
+
+
+        <img src="{{ asset($produit->photo) }}" alt="{{ $produit->nom }}">
 
