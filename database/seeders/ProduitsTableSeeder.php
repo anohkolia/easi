@@ -14,6 +14,6 @@ class ProduitsTableSeeder extends Seeder
     public function run(): void
     {
             // Créer 8 produits fictifs avec la factory
-            Produit::factory(8)->create();
+            Produit::factory(9)->create();
     }
 }

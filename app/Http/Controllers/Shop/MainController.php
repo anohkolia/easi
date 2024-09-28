@@ -5,14 +5,16 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Controllers\Controller;
 use App\Models\Produit;
 use Illuminate\Http\Request;
+use Illuminate\View\view;
 
 class MainController extends Controller
 {
-    public function index() {
+    public function index(): view {
 
+        // SELECT * FROM produits;
         $produits = Produit::all();
-        dd($produits);
+        //dd($produits);
 
-        return view("Shop.index");
+        return view("Shop.index", ['produits' => $produits]);
     }
 }
