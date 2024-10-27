@@ -13,14 +13,18 @@
                     <div class="card shadow-sm">
                         <img class="bd-placeholder-img card-img-top" src="{{ asset('/'.$produit->photo) }}"  alt="">
                         <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                                content. This content is a little bit longer.</p>
+                            <h4 class="card-title">
+                                {{ $produit->nom }}
+                            </h4>
+                            <p class="card-text">
+                                {{ $produit->description }}
+                            </p>
                             <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-body-secondary">{{ $produit->prix_ht }} €</small>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
-                                <small class="text-body-secondary">9 mins</small>
                             </div>
                         </div>
                     </div>
