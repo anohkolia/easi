@@ -17,4 +17,9 @@ class MainController extends Controller
 
         return view("Shop.index", ['produits' => $produits]);
     }
+
+    public function detailproduit(): view {
+        //echo  "page détaille produit";
+        return view("shop.detailproduit");
+    }
 }
