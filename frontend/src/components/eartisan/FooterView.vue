@@ -46,13 +46,6 @@ const supportLinks: FooterLink[] = [
   { name: 'Status', href: '/status' },
 ]
 
-const legalLinks: FooterLink[] = [
-  { name: 'CGU', href: '/cgu' },
-  { name: 'Confidentialité', href: '/confidentialite' },
-  { name: 'Cookies', href: '/cookies' },
-  { name: 'Mentions légales', href: '/mentions-legales' },
-]
-
 const socialLinks: SocialLink[] = [
   {
     name: 'Facebook',
@@ -154,7 +147,7 @@ const handleNewsletterSubmit = async () => {
               <p class="text-gray-400 text-sm">
                 Recevez nos conseils travaux et les dernières actualités
               </p>
-              <form @submit.prevent="handleNewsletterSubmit" class="space-y-3">
+              <form @submit.prevent="handleNewsletterSubmit" class="flex space-y-3">
                 <div class="relative">
                   <input
                     v-model="newsletterEmail"
@@ -170,7 +163,7 @@ const handleNewsletterSubmit = async () => {
                 <button
                   type="submit"
                   :disabled="isNewsletterLoading"
-                  class="w-full bg-[#EF7900] hover:bg-[#d96d00] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  class=" bg-[#EF7900] hover:bg-[#d96d00] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform cursor-pointer hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
                 >
                   <span v-if="!isNewsletterLoading">S'abonner</span>
                   <div v-else class="flex items-center gap-2">
@@ -211,7 +204,7 @@ const handleNewsletterSubmit = async () => {
                 <li v-for="link in aboutLinks" :key="link.name">
                   <a
                     :href="link.href"
-                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
                   >
                     <span class="group-hover:translate-x-1 transition-transform duration-200">{{
                       link.name
@@ -228,7 +221,7 @@ const handleNewsletterSubmit = async () => {
                 <li v-for="link in serviceLinks" :key="link.name">
                   <a
                     :href="link.href"
-                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
                   >
                     <span class="group-hover:translate-x-1 transition-transform duration-200">{{
                       link.name
@@ -245,7 +238,7 @@ const handleNewsletterSubmit = async () => {
                 <li v-for="link in supportLinks" :key="link.name">
                   <a
                     :href="link.href"
-                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
                   >
                     <span class="group-hover:translate-x-1 transition-transform duration-200">{{
                       link.name
@@ -295,28 +288,6 @@ const handleNewsletterSubmit = async () => {
                 ></i>
               </a>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Section légale -->
-      <div class="py-6">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-          <!-- Copyright -->
-          <div class="text-sm text-gray-400">
-            © {{ currentYear }} eartisan. Tous droits réservés.
-          </div>
-
-          <!-- Liens légaux -->
-          <div class="flex flex-wrap gap-6 text-sm">
-            <a
-              v-for="link in legalLinks"
-              :key="link.name"
-              :href="link.href"
-              class="text-gray-400 hover:text-[#088178] transition-colors duration-200"
-            >
-              {{ link.name }}
-            </a>
           </div>
         </div>
       </div>

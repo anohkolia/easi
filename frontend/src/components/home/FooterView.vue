@@ -1,45 +1,281 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { PhoneIcon, EnvelopeIcon, MapPinIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
+
+// Interfaces
+interface FooterLink {
+  name: string
+  href: string
+}
+
+interface SocialLink extends FooterLink {
+  icon: any
+}
+
+// États réactifs
+const newsletterEmail = ref('')
+const emailError = ref('')
+const isNewsletterLoading = ref(false)
+const newsletterSuccess = ref(false)
+
+// Année courante
+const currentYear = computed(() => new Date().getFullYear())
+
+// Liens de navigation
+const aboutLinks: FooterLink[] = [
+  { name: 'Qui sommes-nous', href: '/about' },
+  { name: 'Notre mission', href: '/mission' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Presse', href: '/presse' },
+]
+
+const serviceLinks: FooterLink[] = [
+  { name: 'Nos services', href: '/services' },
+  { name: 'Demander un devis', href: '/devis' },
+  { name: 'Espace professionnel', href: '/pro' },
+  { name: 'Garanties', href: '/garanties' },
+]
+
+const supportLinks: FooterLink[] = [
+  { name: 'FAQ', href: '/faq' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Aide', href: '/aide' },
+  { name: 'Signaler un problème', href: '/signaler' },
+]
+
+const socialLinks: SocialLink[] = [
+  {
+    name: 'Facebook',
+    href: 'https://facebook.com/easi',
+    icon: 'fab fa-facebook-f',
+  },
+  {
+    name: 'WhatsApp',
+    href: 'https://wa.me/2250707277998',
+    icon: 'fab fa-whatsapp',
+  },
+]
+
+// Méthodes
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+const handleNewsletterSubmit = async () => {
+  emailError.value = ''
+
+  if (!newsletterEmail.value) {
+    emailError.value = "L'email est requis"
+    return
+  }
+
+  if (!validateEmail(newsletterEmail.value)) {
+    emailError.value = "Format d'email invalide"
+    return
+  }
+
+  isNewsletterLoading.value = true
+
+  try {
+    // Simulation d'appel API
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    newsletterSuccess.value = true
+    newsletterEmail.value = ''
+
+    // Masquer le message de succès après 3 secondes
+    setTimeout(() => {
+      newsletterSuccess.value = false
+    }, 3000)
+  } catch (error) {
+    emailError.value = "Erreur lors de l'inscription. Veuillez réessayer."
+  } finally {
+    isNewsletterLoading.value = false
+  }
+}
+</script>
 
 <template>
-  <section class="bg-gray-200">
-    <footer class="section-p1 py-10 px-10 md:px-10">
-      <div class="flex flex-col md:flex-row md:justify-between gap-8 px-1">
-        <!-- Colonne 1 -->
-        <div class="col flex-1">
-          <img class="logo w-20 mb-4" src="@/assets/images/logo-easi.png" alt="logo" />
-          <h4 class="text-lg font-semibold text-[#088178] mb-2">Contacts</h4>
-          <p class="text-[#088178] mb-1">
-            <strong>Adresse: </strong>Carrefour Bonoua 1, voie non bitumée
-          </p>
-          <p class="text-[#088178] mb-1"><strong>Téléphone: </strong>(+225) 0707277998</p>
-          <p class="text-[#088178] mb-4">
-            <strong>Services: </strong>08:00 - 17:00, Lundi - Vendredi
-          </p>
-          <div class="follow">
-            <h4 class="text-lg font-semibold text-[#088178] mb-2">Suivez-nous</h4>
-            <div class="icon flex gap-4 text-2xl">
-              <a href="#" class="hover:text-[#0717de] cursor-pointer">
-                <i class="fa-brands fa-facebook"></i>
-              </a>
-              <a href="#" class="hover:text-[#1fc08f] cursor-pointer">
-                <i class="fa-brands fa-whatsapp"></i>
+  <footer class="bg-gray-900 text-white relative overflow-hidden">
+    <!-- Éléments décoratifs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-20 left-20 w-40 h-40 bg-[#088178] opacity-10 rounded-full blur-2xl"
+      ></div>
+      <div
+        class="absolute bottom-20 right-20 w-32 h-32 bg-[#EF7900] opacity-10 rounded-full blur-2xl"
+      ></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <!-- Section principale -->
+      <div class="py-16 border-b border-gray-800">
+        <div class="grid lg:grid-cols-5 gap-8">
+          <!-- Marque et newsletter -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Logo et tagline -->
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3">
+                <img class="logo w-20" src="@/assets/images/logo-easi.png" alt="logo" />
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed max-w-md">
+                Votre partenaire de confiance pour tous vos besoins en services et solutions.
+              </p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">Restez informé</h3>
+              <p class="text-gray-400 text-sm">
+                Recevez nos dernières actualités et offres spéciales
+              </p>
+              <form @submit.prevent="handleNewsletterSubmit" class="flex space-y-3">
+                <div class="relative">
+                  <input
+                    v-model="newsletterEmail"
+                    type="email"
+                    placeholder="Votre adresse email"
+                    required
+                    class="px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#088178] focus:border-[#088178] text-white placeholder-gray-400 transition-all duration-300"
+                  />
+                  <div v-if="emailError" class="absolute -bottom-6 left-0 text-red-400 text-xs">
+                    {{ emailError }}
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  :disabled="isNewsletterLoading"
+                  class="w-full bg-[#EF7900] hover:bg-[#d96d00] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                >
+                  <span v-if="!isNewsletterLoading">S'abonner</span>
+                  <div v-else class="flex items-center gap-2">
+                    <div
+                      class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"
+                    ></div>
+                    <span>Inscription...</span>
+                  </div>
+                </button>
+              </form>
+
+              <!-- Message de confirmation -->
+              <Transition
+                enter-active-class="transition duration-300 ease-out"
+                enter-from-class="opacity-0 transform scale-95"
+                enter-to-class="opacity-100 transform scale-100"
+                leave-active-class="transition duration-200 ease-in"
+                leave-from-class="opacity-100 transform scale-100"
+                leave-to-class="opacity-0 transform scale-95"
+              >
+                <div
+                  v-if="newsletterSuccess"
+                  class="text-green-400 text-sm flex items-center gap-2"
+                >
+                  <CheckCircleIcon class="h-4 w-4" />
+                  <span>Inscription réussie !</span>
+                </div>
+              </Transition>
+            </div>
+          </div>
+
+          <!-- Liens -->
+          <div class="lg:col-span-3 grid sm:grid-cols-3 gap-8">
+            <!-- À propos -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">À propos</h3>
+              <ul class="space-y-3">
+                <li v-for="link in aboutLinks" :key="link.name">
+                  <a
+                    :href="link.href"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
+                  >
+                    <span class="group-hover:translate-x-1 transition-transform duration-200">{{
+                      link.name
+                    }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">Services</h3>
+              <ul class="space-y-3">
+                <li v-for="link in serviceLinks" :key="link.name">
+                  <a
+                    :href="link.href"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
+                  >
+                    <span class="group-hover:translate-x-1 transition-transform duration-200">{{
+                      link.name
+                    }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">Support</h3>
+              <ul class="space-y-3">
+                <li v-for="link in supportLinks" :key="link.name">
+                  <a
+                    :href="link.href"
+                    class="text-gray-400 hover:text-[#088178] text-sm transition-colors duration-200 flex items-center gap-2 group py-0.5"
+                  >
+                    <span class="group-hover:translate-x-1 transition-transform duration-200">{{
+                      link.name
+                    }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section réseaux sociaux et contact -->
+      <div class="py-8 border-b border-gray-800">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <!-- Informations de contact -->
+          <div class="flex flex-col sm:flex-row gap-6 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <PhoneIcon class="h-4 w-4" />
+              <span>(+225) 0707277998</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <EnvelopeIcon class="h-4 w-4" />
+              <span>contact@easi.com</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <MapPinIcon class="h-4 w-4" />
+              <span>Carrefour Bonoua 1, voie non bitumée</span>
+            </div>
+          </div>
+
+          <!-- Réseaux sociaux -->
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-gray-400">Suivez-nous :</span>
+            <div class="flex gap-3">
+              <a
+                v-for="social in socialLinks"
+                :key="social.name"
+                :href="social.href"
+                :aria-label="social.name"
+                class="w-10 h-10 bg-gray-800 hover:bg-[#088178] rounded-lg flex items-center justify-center transition-all duration-300 transform hover:scale-110 group"
+                target="_blank"
+                rel="noopener"
+              >
+                <i
+                  :class="[social.icon, 'h-5 w-5 text-gray-400 group-hover:text-white text-xl']"
+                ></i>
               </a>
             </div>
           </div>
         </div>
-        <!-- Colonne 2 -->
-        <div class="col flex-1">
-          <h4 class="text-lg font-semibold text-[#088178] mb-2">à Propos</h4>
-          <a href="#" class="block text-[#088178] hover:text-[#EF7900] mb-1">à propos de nous</a>
-          <a href="#" class="block text-[#088178] hover:text-[#EF7900] mb-1"
-            >Politique de confidentialité</a
-          >
-          <a href="#" class="block text-[#088178] hover:text-[#EF7900] mb-1">Termes & Conditions</a>
-          <a href="#" class="block text-[#088178] hover:text-[#EF7900]">Contactez-nous</a>
-        </div>
       </div>
-    </footer>
-  </section>
+    </div>
+  </footer>
 </template>
 
 <style scoped></style>
