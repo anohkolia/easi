@@ -75,27 +75,20 @@ onUnmounted(() => {
         <!-- Conteneur flex pour aligner le reste à droite -->
         <div class="flex-1 flex items-center justify-end space-x-8">
           <!-- Navigation Desktop -->
-          <nav class="hidden md:flex items-center space-x-8">
+          <nav class="hidden md:flex items-center space-x-12">
             <router-link
               to="/trouver-artisan"
-              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
               :class="{ 'text-[#EF7900]': isActiveRoute('/trouver-artisan') }"
             >
               Trouver un artisan
             </router-link>
             <router-link
               to="/demander-devis"
-              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
               :class="{ 'text-[#EF7900]': isActiveRoute('/demander-devis') }"
             >
               Demander un devis
-            </router-link>
-            <router-link
-              to="/espace-professionnel"
-              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium"
-              :class="{ 'text-[#EF7900]': isActiveRoute('/espace-professionnel') }"
-            >
-              Espace professionnel
             </router-link>
           </nav>
 
@@ -113,6 +106,13 @@ onUnmounted(() => {
             >
               S'inscrire
             </button>
+            <router-link
+              to="/espace-professionnel"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4 py-2 rounded-lg hover:bg-white/10"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/espace-professionnel') }"
+            >
+              Espace professionnel
+            </router-link>
           </div>
 
           <!-- Menu Hamburger Mobile -->
@@ -156,7 +156,7 @@ onUnmounted(() => {
         id="mobile-menu"
         class="md:hidden bg-[#088178] border-t border-gray-100 shadow-lg"
       >
-        <nav class="px-4 py-6 space-y-4">
+        <nav class="px-12 py-6 space-y-4">
           <router-link
             to="/trouver-artisan"
             @click="closeMobileMenu"
@@ -176,7 +176,7 @@ onUnmounted(() => {
           <router-link
             to="/espace-professionnel"
             @click="closeMobileMenu"
-            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-3"
             :class="{ 'text-[#EF7900]': isActiveRoute('/espace-professionnel') }"
           >
             Espace professionnel
