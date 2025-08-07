@@ -15,16 +15,16 @@ const satisfactionCounter = ref<HTMLElement>()
 // Utilisation du composable pour les animations de compteur
 const { count: animatedArtisans, start: startArtisans } = useCountUp(targetArtisans, {
   duration: 2000,
-  separator: ' '
+  separator: ' ',
 })
 
 const { count: animatedProjects, start: startProjects } = useCountUp(targetProjects, {
   duration: 2500,
-  separator: ' '
+  separator: ' ',
 })
 
 const { count: animatedSatisfaction, start: startSatisfaction } = useCountUp(targetSatisfaction, {
-  duration: 1500
+  duration: 1500,
 })
 
 // Gestion du clic sur le blog
@@ -51,8 +51,8 @@ onMounted(() => {
     },
     {
       threshold: 0.3,
-      rootMargin: '0px 0px -100px 0px'
-    }
+      rootMargin: '0px 0px -100px 0px',
+    },
   )
 
   // Observer la section
@@ -76,7 +76,9 @@ onMounted(() => {
               class="rounded-xl shadow-lg w-full h-96 object-cover"
               loading="lazy"
             />
-            <div class="absolute -bottom-6 -right-6 bg-[#EF7900] text-white p-4 rounded-lg shadow-lg">
+            <div
+              class="absolute -bottom-6 -right-6 bg-[#EF7900] text-white p-4 rounded-lg shadow-lg"
+            >
               <i class="fas fa-heart text-2xl"></i>
             </div>
           </div>
@@ -90,37 +92,28 @@ onMounted(() => {
 
           <p class="text-lg text-gray-600 mb-8 leading-relaxed">
             Notre équipe d'experts s'engage à vous accompagner dans tous vos projets de travaux.
-            Nous mettons notre expertise et notre passion au service de votre satisfaction,
-            en vous proposant un accompagnement personnalisé de A à Z.
+            Nous mettons notre expertise et notre passion au service de votre satisfaction, en vous
+            proposant un accompagnement personnalisé de A à Z.
           </p>
 
           <!-- Statistics -->
           <div class="grid grid-cols-3 gap-6 mb-8">
             <div class="text-center">
-              <div
-                ref="artisansCounter"
-                class="text-3xl font-bold text-[#088178] mb-2"
-              >
+              <div ref="artisansCounter" class="text-3xl font-bold text-[#088178] mb-2">
                 {{ animatedArtisans }}
               </div>
               <p class="text-sm text-gray-600">Artisans partenaires</p>
             </div>
 
             <div class="text-center">
-              <div
-                ref="projectsCounter"
-                class="text-3xl font-bold text-[#088178] mb-2"
-              >
+              <div ref="projectsCounter" class="text-3xl font-bold text-[#088178] mb-2">
                 {{ animatedProjects }}
               </div>
               <p class="text-sm text-gray-600">Projets réalisés</p>
             </div>
 
             <div class="text-center">
-              <div
-                ref="satisfactionCounter"
-                class="text-3xl font-bold text-[#088178] mb-2"
-              >
+              <div ref="satisfactionCounter" class="text-3xl font-bold text-[#088178] mb-2">
                 {{ animatedSatisfaction }}%
               </div>
               <p class="text-sm text-gray-600">Satisfaction client</p>
@@ -148,7 +141,8 @@ onMounted(() => {
 <style scoped>
 /* Animations personnalisées */
 @keyframes pulse-soft {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
