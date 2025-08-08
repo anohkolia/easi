@@ -7,13 +7,6 @@
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  transition: 0.4s;
-  padding: 3px;
-}
-
 @media (min-width: 1024px) {
   #app {
     grid-template-columns: 1fr 1fr;
