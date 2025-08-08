@@ -59,7 +59,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 bg-gray-900 shadow-sm border-b border-gray-100 font-poppins">
+  <header
+    class="fixed top-0 left-0 right-0 z-50 bg-gray-900 shadow-sm border-b border-gray-100 font-poppins"
+  >
     <div class="container mx-auto px-4">
       <div class="flex items-center h-16">
         <!-- Logo (reste à gauche) -->

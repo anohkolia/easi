@@ -163,7 +163,7 @@ const handleNewsletterSubmit = async () => {
                 <button
                   type="submit"
                   :disabled="isNewsletterLoading"
-                  class=" bg-[#EF7900] hover:bg-[#d96d00] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform cursor-pointer hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  class="bg-[#EF7900] hover:bg-[#d96d00] text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform cursor-pointer hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
                 >
                   <span v-if="!isNewsletterLoading">S'abonner</span>
                   <div v-else class="flex items-center gap-2">
