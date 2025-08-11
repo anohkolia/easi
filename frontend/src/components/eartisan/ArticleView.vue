@@ -146,7 +146,7 @@ onMounted(() => {
           <div class="text-center md:text-left">
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Protection client et artisan</h3>
             <p class="text-gray-600 mb-4">
-              Le paiement est retenu pendant 7 jours après la fin des travaux. Cette période permet
+              eartisan agit comme intermédiaire de confiance entre vous et l'artisan. Le paiement est sécurisé retenu pendant 7 jours après la fin des travaux. Cette période permet
               de s'assurer que tout a été réalisé conformément au devis. En cas de litige, notre
               équipe intervient pour trouver une solution équitable.
             </p>
