@@ -30,7 +30,60 @@ You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
 ## Laravel Sponsors
+# Projet T-Shirt Shop
 
+Une boutique en ligne de T-shirts utilisant Laravel et Tailwind CSS.
+
+## Installation
+
+Suivez ces étapes pour installer et exécuter le projet :
+
+1. Clonez le dépôt
+
+2. Installez les dépendances NPM :
+```
+npm install
+```
+
+3. Installez les dépendances Composer :
+```
+composer install
+```
+
+4. Générez la clé d'application :
+```
+php artisan key:generate
+```
+
+5. Configurez votre fichier .env avec les informations de votre base de données
+
+6. Exécutez les migrations pour créer les tables dans la base de données :
+```
+php artisan migrate
+```
+
+7. Remplissez la base de données avec les produits :
+```
+php artisan db:seed
+```
+
+8. Compilez les assets :
+```
+npm run dev
+```
+
+9. Lancez le serveur :
+```
+php artisan serve
+```
+
+10. Accédez à l'application via http://localhost:8000
+
+## Fonctionnalités
+
+- Affichage des produits (T-shirts)
+- Page de détail pour chaque produit
+- Design responsive avec Tailwind CSS
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
 ### Premium Partners

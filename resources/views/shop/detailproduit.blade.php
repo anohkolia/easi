@@ -95,6 +95,60 @@
             </div>
         </div>
     </div>
+@extends('home')
+@section('content')
 
+<section class="py-12 bg-white dark:bg-gray-800">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row -mx-4">
+            <div class="md:flex-1 px-4">
+                <div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
+                    <img class="w-full h-full object-cover" src="{{ asset('/f1.jpg') }}" alt="Produit">
+                </div>
+                <div class="flex -mx-2 mb-4">
+                    <div class="w-1/2 px-2">
+                        <button class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Ajouter au panier</button>
+                    </div>
+                    <div class="w-1/2 px-2">
+                        <button class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Acheter maintenant</button>
+                    </div>
+                </div>
+            </div>
+            <div class="md:flex-1 px-4">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">Chemise Hawai</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed ante justo. Integer euismod libero id neque auctor, quis aliquam mauris consectetur.
+                </p>
+                <div class="flex mb-4">
+                    <div class="mr-4">
+                        <span class="font-bold text-gray-700 dark:text-gray-300">Prix:</span>
+                        <span class="text-gray-600 dark:text-gray-300">20.00 €</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-gray-700 dark:text-gray-300">Disponibilité:</span>
+                        <span class="text-gray-600 dark:text-gray-300">En stock</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <span class="font-bold text-gray-700 dark:text-gray-300">Taille disponible:</span>
+                    <div class="flex items-center mt-2">
+                        <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">S</button>
+                        <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">M</button>
+                        <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">L</button>
+                        <button class="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">XL</button>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-gray-700 dark:text-gray-300">Description du produit:</span>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">
+                        Bonjour je suis une belle Chemise Hawai de taille XL. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed ante justo. Integer euismod libero id neque auctor, quis aliquam mauris consectetur. Proin egestas, risus a condimentum interdum, nisi felis eleifend risus, a condimentum interdum felis risus a sapien.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@endsection
 </main>
 @endsection

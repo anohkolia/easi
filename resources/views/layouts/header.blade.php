@@ -27,7 +27,18 @@
         <span class="sr-only">Toggle theme</span>
     </button>
 </div>
-
+<header class="bg-gray-900 text-white py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+        <a href="/" class="text-xl font-bold">T-Shirt Shop</a>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="/" class="hover:text-blue-400 transition">Accueil</a></li>
+                <li><a href="/shop" class="hover:text-blue-400 transition">Boutique</a></li>
+                <li><a href="/detailproduit" class="hover:text-blue-400 transition">Détail produit</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 <header class="bg-gray-900 text-white">
     <div class="hidden bg-gray-800" id="navbarHeader">
         <div class="max-w-7xl mx-auto px-4 py-6">
