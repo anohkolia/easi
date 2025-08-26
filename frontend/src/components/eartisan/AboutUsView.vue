@@ -6,26 +6,29 @@ import { useCountUp } from '../../composables/useAnimations'
 const STATS_CONFIG = {
   artisans: { target: 2500, duration: 2000, separator: ' ' },
   projects: { target: 15000, duration: 2500, separator: ' ' },
-  satisfaction: { target: 98, duration: 1500 }
+  satisfaction: { target: 98, duration: 1500 },
 }
 
 // Initialisation des compteurs
 const { count: animatedArtisans, start: startArtisans } = useCountUp(STATS_CONFIG.artisans.target, {
   duration: STATS_CONFIG.artisans.duration,
   separator: STATS_CONFIG.artisans.separator,
-  end: 0
+  end: 0,
 })
 
 const { count: animatedProjects, start: startProjects } = useCountUp(STATS_CONFIG.projects.target, {
   duration: STATS_CONFIG.projects.duration,
   separator: STATS_CONFIG.projects.separator,
-  end: 0
+  end: 0,
 })
 
-const { count: animatedSatisfaction, start: startSatisfaction } = useCountUp(STATS_CONFIG.satisfaction.target, {
-  duration: STATS_CONFIG.satisfaction.duration,
-  end: 0
-})
+const { count: animatedSatisfaction, start: startSatisfaction } = useCountUp(
+  STATS_CONFIG.satisfaction.target,
+  {
+    duration: STATS_CONFIG.satisfaction.duration,
+    end: 0,
+  },
+)
 
 // Valeurs formatées
 const formattedArtisans = computed(() => animatedArtisans.value.toLocaleString())
@@ -47,7 +50,7 @@ onMounted(() => {
         observer.disconnect()
       }
     },
-    { threshold: 0.3, rootMargin: '0px 0px -100px 0px' }
+    { threshold: 0.3, rootMargin: '0px 0px -100px 0px' },
   )
 
   const section = document.querySelector('#about-section')
@@ -113,9 +116,7 @@ const handleBlogClick = () => {
             </div>
 
             <div class="text-center">
-              <div class="text-3xl font-bold text-[#088178] mb-2">
-                {{ animatedSatisfaction }}%
-              </div>
+              <div class="text-3xl font-bold text-[#088178] mb-2">{{ animatedSatisfaction }}%</div>
               <p class="text-sm text-gray-600">Satisfaction client</p>
             </div>
           </div>
@@ -140,8 +141,13 @@ const handleBlogClick = () => {
 <style scoped>
 /* Animations personnalisées */
 @keyframes pulse-soft {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 .animate-pulse-soft {
