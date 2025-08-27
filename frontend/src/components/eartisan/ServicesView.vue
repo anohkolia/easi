@@ -1,3 +1,53 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+
+interface Service {
+  title: string;
+  slug: string;
+  icon: string;
+}
+
+const router = useRouter();
+
+// Liste complète des services avec icônes Font Awesome
+const allServices = ref<Service[]>([
+  { title: "Plomberie & Sanitaire", slug: 'plomberie-sanitaire', icon: 'fas fa-faucet' },
+  { title: "Peinture & Mur", slug: 'peinture-mur', icon: 'fas fa-paint-roller' },
+  { title: 'Carrelage & Sol', slug: 'carrelage-sol', icon: 'fas fa-border-all' },
+  { title: 'Serrurerie & Menuiserie', slug: 'serrurerie-menuiserie', icon: 'fas fa-key' },
+  { title: "Montage & Démontage", slug: 'montage-demontage', icon: 'fas fa-tools' },
+  { title: 'Fixations & Poses', slug: 'fixations-poses', icon: 'fas fa-screwdriver' },
+  { title: 'Entretien & Nettoyage', slug: 'entretien-nettoyage', icon: 'fas fa-broom' },
+  { title: 'Déménagement', slug: 'demenagement', icon: 'fas fa-truck-moving' },
+  { title: 'Climatisation', slug: 'climatisation', icon: 'fas fa-fan' },
+  { title: "TV, Informatique & Sécurité", slug: 'informatique', icon: 'fas fa-desktop' },
+  { title: 'Electricité & Énergie', slug: 'electricite-energie', icon: 'fas fa-bolt' },
+  { title: 'Electroménager', slug: 'electromenager', icon: 'fas fa-blender' },
+]);
+
+// Affichage paginé
+const itemsPerPage = 8;
+const visibleCount = ref(itemsPerPage);
+
+const visibleServices = computed(() => allServices.value.slice(0, visibleCount.value));
+const showMoreButton = computed(() => visibleCount.value < allServices.value.length);
+
+const loadMoreServices = () => {
+  visibleCount.value += itemsPerPage;
+};
+
+const navigateToService = (service: Service) => {
+  console.log(`Navigation vers: ${service.slug}`);
+  // Redirection vers la page de formulaire avec le service en paramètre
+  router.push({
+    name: 'ServiceForm',
+    params: { serviceSlug: service.slug },
+    query: { serviceName: service.title }
+  });
+};
+</script>
+
 <template>
   <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
@@ -63,48 +113,6 @@
     </div>
   </section>
 </template>
-
-<script setup lang="ts">
-import { ref, computed } from 'vue';
-
-interface Service {
-  title: string;
-  slug: string;
-  icon: string;
-}
-
-// Liste complète des services avec icônes Font Awesome
-const allServices = ref<Service[]>([
-  { title: "Plomberie & Sanitaire", slug: 'plomberie-sanitaire', icon: 'fas fa-faucet' },
-  { title: "Peinture & Mur", slug: 'peinture-mur', icon: 'fas fa-paint-roller' },
-  { title: 'Carrelage & Sol', slug: 'carrelage-sol', icon: 'fas fa-border-all' },
-  { title: 'Serrurerie & Menuiserie', slug: 'serrurerie-menuiserie', icon: 'fas fa-key' },
-  { title: "Montage & Démontage", slug: 'montage-demontage', icon: 'fas fa-tools' },
-  { title: 'Fixations & Poses', slug: 'fixations-poses', icon: 'fas fa-screwdriver' },
-  { title: 'Entretien & Nettoyage', slug: 'entretien-nettoyage', icon: 'fas fa-broom' },
-  { title: 'Déménagement', slug: 'demenagement', icon: 'fas fa-truck-moving' },
-  { title: 'Climatisation', slug: 'climatisation', icon: 'fas fa-fan' },
-  { title: "TV, Informatique & Sécurité", slug: 'informatique', icon: 'fas fa-desktop' },
-  { title: 'Electricité & Énergie', slug: 'electricite-energie', icon: 'fas fa-bolt' },
-  { title: 'Electroménager', slug: 'electromenager', icon: 'fas fa-blender' },
-]);
-
-// Affichage paginé
-const itemsPerPage = 8;
-const visibleCount = ref(itemsPerPage);
-
-const visibleServices = computed(() => allServices.value.slice(0, visibleCount.value));
-const showMoreButton = computed(() => visibleCount.value < allServices.value.length);
-
-const loadMoreServices = () => {
-  visibleCount.value += itemsPerPage;
-};
-
-const navigateToService = (service: Service) => {
-  console.log(`Navigation vers: ${service.slug}`);
-  // router.push(`/services/${service.slug}`);
-};
-</script>
 
 <style scoped>
 /* Animation des cartes */
