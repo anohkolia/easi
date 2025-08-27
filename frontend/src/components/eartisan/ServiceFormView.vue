@@ -30,7 +30,7 @@
             >
               <div class="flex items-center">
                 <div class="w-10 h-10 bg-[#088178] bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i :class="option.icon" class="text-[#088178]"></i>
+                  <i :class="option.icon" class="text-white"></i>
                 </div>
                 <span class="font-medium">{{ option.label }}</span>
               </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const steps = [
   {
@@ -33,6 +33,8 @@ const steps = [
 ]
 
 const animatedSteps = ref(steps.map(() => false))
+const confianceSection = ref<HTMLElement | null>(null)
+let observer: IntersectionObserver | null = null
 
 const startAnimation = () => {
   steps.forEach((_, index) => {
@@ -43,34 +45,36 @@ const startAnimation = () => {
 }
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
+  if (!confianceSection.value) return
+
+  observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           startAnimation()
-          observer.unobserve(entry.target)
+          observer?.unobserve(entry.target)
         }
       })
     },
     { threshold: 0.1 },
   )
 
-  const section = document.getElementById('confiance-section')
-  if (section) {
-    observer.observe(section)
-  }
+  observer.observe(confianceSection.value)
+})
 
-  return () => {
-    if (section) observer.unobserve(section)
+onUnmounted(() => {
+  if (observer && confianceSection.value) {
+    observer.unobserve(confianceSection.value)
   }
+  observer?.disconnect()
 })
 </script>
 
 <template>
-  <section id="confiance-section" class="py-16 bg-[#088178]/5">
+  <section ref="confianceSection" class="py-16 bg-[#088178]/5" aria-labelledby="confiance-title">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 id="confiance-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Sécuri'Travaux : la garantie de travaux bien faits
         </h2>
         <p class="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -93,20 +97,27 @@ onMounted(() => {
           </div>
 
           <div class="relative z-10 grid grid-cols-4 gap-8">
-            <div v-for="(step, index) in steps" :key="step.id" class="flex flex-col items-center">
+            <div 
+              v-for="(step, index) in steps" 
+              :key="step.id" 
+              class="flex flex-col items-center will-change-transform"
+              :class="{ 'animate-fade-in-up': animatedSteps[index] }"
+              :style="{ animationDelay: animatedSteps[index] ? `${index * 0.1}s` : '0s' }"
+            >
               <div
-                class="w-16 h-16 rounded-full bg-white border-4 border-white flex items-center justify-center mb-4 shadow-md transition-all duration-300"
+                class="w-16 h-16 rounded-full bg-white border-4 border-white flex items-center justify-center mb-4 shadow-md transition-all duration-300 will-change-transform"
                 :class="{
                   'scale-110': animatedSteps[index],
                   'border-[#088178]': animatedSteps[index],
                 }"
+                :aria-label="`Étape ${index + 1}: ${step.title}`"
               >
-                <i :class="`${step.icon} fa-lg ${step.iconColor}`"></i>
+                <i :class="`${step.icon} fa-lg ${step.iconColor}`" aria-hidden="true"></i>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center will-change-opacity">
                 {{ step.title }}
               </h3>
-              <p class="text-gray-600 text-center">
+              <p class="text-gray-600 text-center will-change-opacity">
                 {{ step.description }}
               </p>
             </div>
@@ -122,8 +133,9 @@ onMounted(() => {
             :class="{
               'scale-110 border-[#088178]': animatedSteps[index],
             }"
+            :aria-label="`Étape ${index + 1}: ${step.title}`"
           >
-            <i :class="`${step.icon} ${step.iconColor}`"></i>
+            <i :class="`${step.icon} ${step.iconColor}`" aria-hidden="true"></i>
           </div>
           <div>
             <h3 class="text-lg font-semibold text-gray-900 mb-1">
@@ -168,9 +180,50 @@ onMounted(() => {
 <style scoped>
 .scale-110 {
   transform: scale(1.1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+             border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-bar {
-  transition: width 1s ease-out;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optimisation des performances pour les animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Animation d'entrée pour les étapes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Réduction du mouvement pour les préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .scale-110,
+  .progress-bar,
+  .animate-fade-in-up {
+    animation: none;
+    transition: none;
+  }
+  
+  .scale-110 {
+    transform: scale(1);
+  }
 }
 </style>

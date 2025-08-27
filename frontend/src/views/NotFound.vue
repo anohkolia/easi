@@ -1,21 +1,15 @@
 <template>
   <div class="min-h-screen bg-gray-50 flex flex-col">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div class="container mx-auto px-4 py-4">
-        <router-link to="/" class="flex items-center">
-          <span class="text-2xl font-bold text-[#088178]">eartisan</span>
-        </router-link>
-      </div>
-    </header>
+    <HeaderView />
 
     <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center py-16">
+    <main class="flex-grow flex items-center justify-center py-16 pt-25">
       <div class="container mx-auto px-4 text-center">
         <!-- Illustration -->
         <div class="mb-8">
           <div class="w-48 h-48 mx-auto bg-[#088178] bg-opacity-10 rounded-full flex items-center justify-center">
-            <svg class="w-24 h-24 text-[#088178]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-24 h-24 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47.87-6.09 2.29M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 8v2m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
             </svg>
           </div>
@@ -71,7 +65,7 @@
               v-for="service in popularServices"
               :key="service.slug"
               :to="`/service/${service.slug}?serviceName=${encodeURIComponent(service.title)}`"
-              class="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-[#EF7900] text-center"
+              class="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border-t-4 border-[#088178] text-center"
             >
               <i :class="service.icon" class="text-[#088178] text-xl mb-2"></i>
               <p class="text-sm font-medium text-gray-700">{{ service.title }}</p>
@@ -80,17 +74,14 @@
         </div>
       </div>
     </main>
-
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-      <div class="container mx-auto px-4 text-center">
-        <p class="text-gray-400">© {{ new Date().getFullYear() }} eartisan. Tous droits réservés.</p>
-      </div>
-    </footer>
+    <FooterView />
   </div>
 </template>
 
 <script setup lang="ts">
+import HeaderView from '@/components/eartisan/HeaderView.vue';
+import FooterView from '@/components/home/FooterView.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
