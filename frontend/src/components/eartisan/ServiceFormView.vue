@@ -129,11 +129,22 @@ const selectedOptions = ref<string[]>([]);
 const otherOption = ref('');
 const details = ref('');
 
-// Options de service
-const serviceOptions = [
-  { value: 'installation', label: 'Installation et Pose', icon: 'fas fa-tools' },
-  { value: 'depannage', label: 'Dépannage et Fuite', icon: 'fas fa-wrench' }
-];
+// Options de service basées sur le type de service sélectionné
+const serviceOptions = computed(() => {
+  const serviceSlug = route.params.serviceSlug as string;
+  
+  if (serviceSlug === 'peinture-mur') {
+    return [
+      { value: 'peinture-mur', label: 'Peinture & Mur', icon: 'fas fa-paint-roller' }
+    ];
+  } else if (serviceSlug === 'plomberie-sanitaire') {
+    return [
+      { value: 'installation', label: 'Installation et Pose', icon: 'fas fa-tools' },
+      { value: 'depannage', label: 'Dépannage et Fuite', icon: 'fas fa-wrench' }
+    ];
+  }
+  return [];
+});
 
 // Options spécifiques par type
 const specificOptions = {
@@ -144,12 +155,22 @@ const specificOptions = {
   depannage: [
     'Dépannage Baignoire', 'Dépannage Lavabo', 'Dépannage Jacuzzi', 
     'Dépannage WC', 'Dépannage Robinet', 'Dépannage Fuite'
+  ],
+  'peinture-mur': [
+    'Peinture', 'Tyrolienne & Enduit', 'Pose de papier Peinture'
   ]
 };
 
-// Options actuelles basées sur le type sélectionné
+// Options actuelles basées sur le type de service sélectionné
 const currentOptions = computed(() => {
-  return selectedServiceType.value ? specificOptions[selectedServiceType.value as keyof typeof specificOptions] : [];
+  const serviceSlug = route.params.serviceSlug as string;
+  
+  if (serviceSlug === 'peinture-mur') {
+    return specificOptions['peinture-mur'];
+  } else if (serviceSlug === 'plomberie-sanitaire') {
+    return specificOptions['installation'].concat(specificOptions['depannage']);
+  }
+  return [];
 });
 
 // Validation du formulaire
