@@ -30,7 +30,7 @@
             >
               <div class="flex items-center">
                 <div class="w-10 h-10 bg-[#088178] bg-opacity-20 rounded-full flex items-center justify-center mr-3">
-                  <i :class="option.icon" class="text-white"></i>
+                  <i :class="option.icon" class="text-[#088178]"></i>
                 </div>
                 <span class="font-medium">{{ option.label }}</span>
               </div>
@@ -38,16 +38,16 @@
           </div>
         </div>
 
-        <!-- Options spécifiques -->
+        <!-- Options spécifiques - UNIQUEMENT si un type est sélectionné -->
         <div v-if="selectedServiceType" class="mb-8">
           <label class="block text-lg font-semibold text-gray-800 mb-4">
-            Sélectionnez votre besoin *
+            Sélectionnez votre besoin
           </label>
           
-          <!-- Options prédéfinies -->
+          <!-- Options prédéfinies selon le type choisi -->
           <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
             <button
-              v-for="item in currentOptions"
+              v-for="item in getSpecificOptions()"
               :key="item"
               @click="toggleOption(item)"
               :class="[
@@ -64,7 +64,7 @@
           <!-- Autre option -->
           <div class="mt-4">
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Autre besoin (précisez)
+              Autre besoin (si votre besoin ne figure pas dans la liste)
             </label>
             <input
               v-model="otherOption"
@@ -75,7 +75,7 @@
           </div>
         </div>
 
-        <!-- Détails supplémentaires -->
+        <!-- Détails supplémentaires - TOUJOURS visible -->
         <div class="mb-8">
           <label class="block text-lg font-semibold text-gray-800 mb-4">
             Détails supplémentaires *
@@ -129,24 +129,34 @@ const selectedOptions = ref<string[]>([]);
 const otherOption = ref('');
 const details = ref('');
 
-// Options de service basées sur le type de service sélectionné
+// Options de service basées sur le service sélectionné
 const serviceOptions = computed(() => {
   const serviceSlug = route.params.serviceSlug as string;
   
-  if (serviceSlug === 'peinture-mur') {
-    return [
-      { value: 'peinture-mur', label: 'Peinture & Mur', icon: 'fas fa-paint-roller' }
-    ];
-  } else if (serviceSlug === 'plomberie-sanitaire') {
+  // Pour Plomberie & Sanitaire
+  switch (serviceSlug) {
+    case 'plomberie-sanitaire' :
     return [
       { value: 'installation', label: 'Installation et Pose', icon: 'fas fa-tools' },
       { value: 'depannage', label: 'Dépannage et Fuite', icon: 'fas fa-wrench' }
     ];
+
+    case 'peinture-mur' :
+      return [
+        {value: 'peinture', label: 'Peinture', icon: 'fas fa-paint-roller'},
+        {value: 'papierpeint', label: 'Pose de papier peint'},
+        {value: 'enduit', label: 'Tyrolienne & Enduit'}
+        
+      ]
   }
-  return [];
+  
+  // Pour les autres services (ex: Peinture)
+  return [
+    { value: 'standard', label: 'Service Standard', icon: 'fas fa-cogs' }
+  ];
 });
 
-// Options spécifiques par type
+// Options spécifiques par type de service
 const specificOptions = {
   installation: [
     'Baignoire', 'Lavabo', 'Jacuzzi', 'WC', 'Robinet', 
@@ -156,43 +166,29 @@ const specificOptions = {
     'Dépannage Baignoire', 'Dépannage Lavabo', 'Dépannage Jacuzzi', 
     'Dépannage WC', 'Dépannage Robinet', 'Dépannage Fuite'
   ],
-  'peinture-mur': [
-    'Peinture', 'Tyrolienne & Enduit', 'Pose de papier Peinture'
-  ]
+  standard: [] // Pour les services sans sous-catégories
 };
 
-// Options actuelles basées sur le type de service sélectionné
-const currentOptions = computed(() => {
-  const serviceSlug = route.params.serviceSlug as string;
-  
-  if (serviceSlug === 'peinture-mur') {
-    return specificOptions['peinture-mur'];
-  } else if (serviceSlug === 'plomberie-sanitaire') {
-    return specificOptions['installation'].concat(specificOptions['depannage']);
-  }
-  return [];
-});
+// Récupère les options spécifiques selon le type choisi
+const getSpecificOptions = () => {
+  return selectedServiceType.value ? specificOptions[selectedServiceType.value as keyof typeof specificOptions] : [];
+};
 
 // Validation du formulaire
 const isFormValid = computed(() => {
-  return selectedServiceType.value && details.value.trim().length > 0;
+  return details.value.trim().length > 0; // Seuls les détails sont obligatoires
 });
 
 // Initialisation
 onMounted(() => {
-  // Récupère le nom du service depuis les query params
   serviceName.value = route.query.serviceName as string || 'Service';
-  
-  // Vous pouvez aussi utiliser le serviceSlug si besoin
-  const serviceSlug = route.params.serviceSlug as string;
-  console.log('Service slug:', serviceSlug);
 });
 
 // Méthodes
 const selectServiceType = (type: string) => {
   selectedServiceType.value = type;
-  selectedOptions.value = [];
-  otherOption.value = '';
+  selectedOptions.value = []; // Réinitialise les options sélectionnées
+  otherOption.value = ''; // Réinitialise le champ "autre"
 };
 
 const toggleOption = (option: string) => {
@@ -213,7 +209,7 @@ const submitForm = () => {
 
   const formData = {
     service: serviceName.value,
-    type: selectedServiceType.value,
+    serviceType: selectedServiceType.value,
     selectedOptions: selectedOptions.value,
     otherOption: otherOption.value,
     details: details.value,
@@ -223,7 +219,6 @@ const submitForm = () => {
   console.log('Données du formulaire:', formData);
   
   // Ici vous pouvez envoyer les données à votre API
-  // et rediriger vers une page de confirmation
   alert('Votre demande a été soumise avec succès !');
   router.push('/confirmation');
 };
