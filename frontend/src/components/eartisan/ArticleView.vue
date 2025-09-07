@@ -97,9 +97,9 @@ onUnmounted(() => {
           </div>
 
           <div class="relative z-10 grid grid-cols-4 gap-8">
-            <div 
-              v-for="(step, index) in steps" 
-              :key="step.id" 
+            <div
+              v-for="(step, index) in steps"
+              :key="step.id"
               class="flex flex-col items-center will-change-transform"
               :class="{ 'animate-fade-in-up': animatedSteps[index] }"
               :style="{ animationDelay: animatedSteps[index] ? `${index * 0.1}s` : '0s' }"
@@ -180,8 +180,9 @@ onUnmounted(() => {
 <style scoped>
 .scale-110 {
   transform: scale(1.1);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-             border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .progress-bar {
@@ -221,7 +222,7 @@ onUnmounted(() => {
     animation: none;
     transition: none;
   }
-  
+
   .scale-110 {
     transform: scale(1);
   }

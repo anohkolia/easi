@@ -21,15 +21,15 @@ const router = createRouter({
       name: 'ServiceForm',
       component: ServiceFormView,
       props: (route) => ({
-    serviceSlug: route.params.serviceSlug,
-    serviceName: route.query.serviceName
-    })
+        serviceSlug: route.params.serviceSlug,
+        serviceName: route.query.serviceName,
+      }),
     },
     {
-  path: '/:pathMatch(.*)*',
-  name: 'NotFound',
-  component: () => import('@/views/NotFound.vue')
-}
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFound.vue'),
+    },
   ],
 })
 

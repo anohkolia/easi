@@ -53,7 +53,7 @@ describe('ArticleView', () => {
   it('has responsive design classes', () => {
     const desktopTimeline = wrapper.find('.hidden.md\\:block')
     const mobileTimeline = wrapper.find('.md\\:hidden')
-    
+
     expect(desktopTimeline.exists()).toBe(true)
     expect(mobileTimeline.exists()).toBe(true)
   })
