@@ -1,168 +1,244 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-const isMenuOpen = ref(false)
+const route = useRoute()
+const isMobileMenuOpen = ref(false)
 const isScrolled = ref(false)
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
-const closeMenu = () => {
-  isMenuOpen.value = false
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
+
+const isActiveRoute = (path: string): boolean => {
+  return route.path === path
 }
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
+// Fermer le menu mobile quand on clique ailleurs
+const handleClickOutside = (event: Event) => {
+  const target = event.target as HTMLElement
+  const mobileMenu = document.getElementById('mobile-menu')
+  const hamburgerButton = target.closest('button[aria-controls="mobile-menu"]')
+
+  if (isMobileMenuOpen.value && !mobileMenu?.contains(target) && !hamburgerButton) {
+    closeMobileMenu()
+  }
+}
+
+// Fermer le menu mobile avec Escape
+const handleKeyDown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && isMobileMenuOpen.value) {
+    closeMobileMenu()
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  document.addEventListener('click', handleClickOutside)
+  document.addEventListener('keydown', handleKeyDown)
 })
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleKeyDown)
 })
 </script>
 
 <template>
-  <section class="bg-gray-200">
-    <nav
-      :class="[
-        'flex items-center justify-between px-10 py-4 shadow-md transition-all duration-300 w-full',
-        isScrolled
-          ? 'fixed top-0 left-0 right-0 z-50 bg-gray-200/95 backdrop-blur-sm py-3'
-          : 'bg-gray-200',
-      ]"
-    >
-      <a href="#" class="flex items-center">
-        <img src="@/assets/images/logo-easi.png" class="logo h-12" alt="Logo EASI" />
-      </a>
+  <header
+    :class="[
+      'fixed top-0 left-0 right-0 z-50 bg-gray-900 shadow-sm transition-all duration-300 font-poppins',
+      isScrolled ? 'bg-gray-900/95 backdrop-blur-sm' : 'bg-gray-900',
+    ]"
+  >
+    <div class="container mx-auto px-4">
+      <div class="flex items-center h-16">
+        <!-- Logo -->
+        <div class="flex-none">
+          <router-link to="/" class="flex items-center space-x-2">
+            <img src="@/assets/images/logo-easi.png" class="h-15" alt="Logo EASI" />
+          </router-link>
+        </div>
 
-      <div>
-        <ul
-          id="navbar"
-          :class="[
-            'lg:flex',
-            'items-center',
-            'space-x-10',
-            isMenuOpen
-              ? 'flex flex-col fixed top-0 right-0 h-screen bg-white w-64 shadow-lg pt-20 px-4 z-50 transition-all duration-300'
-              : 'hidden lg:flex',
-          ]"
-        >
-          <li>
-            <a
-              class="active:bg-[#EF7900] font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900] border-b-2 border-[#EF7900]"
-              href="index.html"
-              >Accueil</a
-            >
-          </li>
-          <li>
+        <!-- Conteneur flex pour aligner le reste à droite -->
+        <div class="flex-1 flex items-center justify-end space-x-8">
+          <!-- Navigation Desktop -->
+          <nav class="hidden md:flex items-center space-x-12">
             <router-link
-              class="font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900]"
+              to="/"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/') }"
+            >
+              Accueil
+            </router-link>
+            <router-link
               to="/eartisan"
-              >eartisan</router-link
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/eartisan') }"
             >
-          </li>
-          <li>
-            <a class="font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900]" href="#"
-              >ecommerce</a
+              eartisan
+            </router-link>
+            <router-link
+              to="/ecommerce"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/ecommerce') }"
             >
-          </li>
-          <li>
-            <a class="font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900]" href="#"
-              >elibrairie</a
+              ecommerce
+            </router-link>
+            <router-link
+              to="/elibrairie"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/elibrairie') }"
             >
-          </li>
-          <li>
-            <a class="font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900]" href="#"
-              >eimmobilier</a
+              elibrairie
+            </router-link>
+            <router-link
+              to="/eimmobilier"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/eimmobilier') }"
             >
-          </li>
-          <li>
-            <a class="font-bold py-2 px-3 text-[#088178] hover:text-[#EF7900]" href="#"
-              >eagricole</a
+              eimmobilier
+            </router-link>
+            <router-link
+              to="/eagricole"
+              class="text-white hover:text-[#088178] transition-colors duration-300 font-medium px-4"
+              :class="{ 'text-[#EF7900]': isActiveRoute('/eagricole') }"
             >
-          </li>
-          <a
-            href="#"
-            id="close"
-            class="absolute top-5 right-5 text-xl lg:hidden"
-            @click.prevent="closeMenu"
+              eagricole
+            </router-link>
+          </nav>
+
+          <!-- Menu Hamburger Mobile -->
+          <button
+            @click="toggleMobileMenu"
+            class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors duration-300"
+            :aria-expanded="isMobileMenuOpen"
+            aria-controls="mobile-menu"
+            aria-label="Toggle navigation menu"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </a>
-        </ul>
+            <div class="w-6 h-6 flex flex-col justify-center items-center">
+              <span
+                class="block w-6 h-0.5 bg-white transition-all duration-300"
+                :class="{ 'rotate-45 translate-y-1.5': isMobileMenuOpen }"
+              ></span>
+              <span
+                class="block w-6 h-0.5 bg-white mt-1 transition-all duration-300"
+                :class="{ 'opacity-0': isMobileMenuOpen }"
+              ></span>
+              <span
+                class="block w-6 h-0.5 bg-white mt-1 transition-all duration-300"
+                :class="{ '-rotate-45 -translate-y-1.5': isMobileMenuOpen }"
+              ></span>
+            </div>
+          </button>
+        </div>
       </div>
-      <div id="mobile" class="lg:hidden">
-        <button @click="toggleMenu" id="bar" class="text-gray-800 hover:text-[#088178]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+    </div>
+
+    <!-- Menu Mobile Overlay -->
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="opacity-0 transform -translate-y-full"
+      enter-to-class="opacity-100 transform translate-y-0"
+      leave-active-class="transition-all duration-300 ease-in"
+      leave-from-class="opacity-100 transform translate-y-0"
+      leave-to-class="opacity-0 transform -translate-y-full"
+    >
+      <div
+        v-if="isMobileMenuOpen"
+        id="mobile-menu"
+        class="md:hidden bg-[#088178] border-t border-gray-100 shadow-lg"
+      >
+        <nav class="px-12 py-6 space-y-4">
+          <router-link
+            to="/"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/') }"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
+            Accueil
+          </router-link>
+          <router-link
+            to="/eartisan"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/eartisan') }"
+          >
+            eartisan
+          </router-link>
+          <router-link
+            to="/ecommerce"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/ecommerce') }"
+          >
+            ecommerce
+          </router-link>
+          <router-link
+            to="/elibrairie"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/elibrairie') }"
+          >
+            elibrairie
+          </router-link>
+          <router-link
+            to="/eimmobilier"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/eimmobilier') }"
+          >
+            eimmobilier
+          </router-link>
+          <router-link
+            to="/eagricole"
+            @click="closeMobileMenu"
+            class="block text-white hover:text-[#EF7900] transition-colors duration-300 font-medium py-2"
+            :class="{ 'text-[#EF7900]': isActiveRoute('/eagricole') }"
+          >
+            eagricole
+          </router-link>
+        </nav>
       </div>
-    </nav>
-  </section>
+    </Transition>
+  </header>
 </template>
 
 <style scoped>
-.logo {
-  width: 80px;
-}
-
-@media (max-width: 1024px) {
-  #navbar {
-    transition: all 0.3s ease;
-  }
-
-  #navbar li {
-    margin-bottom: 1rem;
-  }
-}
-
-#navbar .active {
-  position: relative;
-  color: #088178;
-}
-
-#navbar a {
-  color: #088178;
-}
-
-#navbar a:hover {
-  color: #ef7900;
-}
-
-section {
+/* Animation pour le menu mobile */
+#mobile-menu {
   transition: all 0.3s ease;
 }
 
-section.fixed {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+/* Style des liens actifs */
+.router-link-active {
+  position: relative;
+}
+
+.router-link-active:not(.exact-active) {
+  color: #088178;
+}
+
+.router-link-exact-active {
+  color: #ef7900;
+}
+
+/* Effet de transition pour le header */
+header {
+  transition: all 0.3s ease;
+}
+
+/* Style pour le backdrop blur */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
 }
 </style>

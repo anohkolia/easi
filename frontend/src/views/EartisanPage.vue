@@ -1,19 +1,29 @@
 <script setup lang="ts">
 import HeaderView from '@/components/eartisan/HeaderView.vue'
 import FooterView from '@/components/eartisan/FooterView.vue'
+import HeroView from '@/components/eartisan/HeroView.vue'
+import AboutUsView from '@/components/eartisan/AboutUsView.vue'
+import ConfianceView from '@/components/eartisan/ConfianceView.vue'
+import ArticleView from '@/components/eartisan/ArticleView.vue'
+import SearchForm from '@/components/eartisan/SearchForm.vue'
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <main class="bg-gray-50">
     <HeaderView />
 
-    <main class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold text-[#088178] mb-6">Bienvenue sur eartisan</h1>
-      <!-- Contenu de la page eartisan à venir -->
-    </main>
+    <HeroView />
+
+    <SearchForm />
+
+    <ConfianceView />
+
+    <ArticleView />
+
+    <AboutUsView />
 
     <FooterView />
-  </div>
+  </main>
 </template>
 
 <style scoped></style>
