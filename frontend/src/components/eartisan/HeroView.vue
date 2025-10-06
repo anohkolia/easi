@@ -14,7 +14,7 @@ onMounted(() => {
 
 <template>
   <section
-    class="relative mt-16 bg-gradient-to-br from-[#088178]/5 via-[#088178]/10 to-[#088178] text-gray-900 overflow-hidden"
+    class="relative mt-17 pt-5 bg-gradient-to-br from-[#088178]/5 via-[#088178]/10 to-[#088178] text-gray-900 overflow-hidden"
   >
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">
@@ -108,7 +108,7 @@ onMounted(() => {
           </div>
           <!-- Floating Cards -->
           <div
-            class="absolute -top-4 -left-4 bg-white rounded-lg p-4 shadow-lg z-20 animate-bounce"
+            class="absolute -top-4 -left-4 bg-white rounded-lg p-2 shadow-lg z-20 animate-bounce"
           >
             <div class="flex items-center space-x-2">
               <i class="fas fa-star text-yellow-400"></i>
