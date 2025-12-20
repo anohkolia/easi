@@ -40,7 +40,7 @@ const serviceOptions = computed(() => {
         { value: 'pose-carrelage', label: 'Pose de carrelage sol ou mural', icon: 'fas fa-th-large' },
         { value: 'refection-joint', label: 'Réfection de joints' },
       ]
-    
+
     case 'serrurerie-menuiserie':
       return [
         { value: 'porte-bois', label: 'Porte en bois', icon: 'fas fa-door-closed' },
@@ -167,13 +167,13 @@ const submitForm = () => {
                 :class="[
                   'p-4 rounded-lg border-2 text-left transition-all duration-300',
                   selectedServiceType === option.value
-                    ? 'border-[#088178] bg-[#088178] bg-opacity-10'
+                    ? 'border-[#088178] bg-[#088178] bg-opacity-10 text-white'
                     : 'border-gray-300 hover:border-[#088178] hover:bg-gray-50',
                 ]"
               >
                 <div class="flex items-center">
                   <div
-                    class="w-10 h-10 bg-[#088178] bg-opacity-20 rounded-full flex items-center justify-center mr-3"
+                    class="w-10 h-10 bg-[#088178] bg-opacity-20 rounded-full flex items-center justify-center mr-3 border-1 border-white"
                   >
                     <i :class="option.icon" class="text-white"></i>
                   </div>
@@ -198,7 +198,7 @@ const submitForm = () => {
                 :class="[
                   'px-4 py-3 rounded-lg border text-sm font-medium transition-all duration-200',
                   selectedOptions.includes(item)
-                    ? 'border-[#088178] bg-[#088178] bg-opacity-10 text-[#088178]'
+                    ? 'border-[#088178] bg-[#088178] bg-opacity-10 text-white'
                     : 'border-gray-300 text-gray-700 hover:border-[#088178] hover:bg-gray-50',
                 ]"
               >
@@ -233,6 +233,11 @@ const submitForm = () => {
               required
             ></textarea>
           </div>
+
+          <!-- Type d'intervention -->
+           <div class="mb-8">
+
+           </div>
 
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row gap-4">
